@@ -79,6 +79,13 @@ module.exports = {
         test: /\.less$/,
         loader: "style-loader!css-loader!less-loader",
       },
+      {
+        test:/\.jade$/,
+        loader:"jade"
+      },{
+        test:/\.pug/,
+        loader:"pug"
+      },
     ]
   },
   node: {

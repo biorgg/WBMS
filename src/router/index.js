@@ -8,16 +8,23 @@ const router = new Router({
   routes: [
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: Login
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(to.path)
-  next()
-  // next({ name: 'Login' })
+  let token = null
+  if (token) {
+    console.log(11111)
+  } else {
+    if (to.path === '/login') {
+      next()
+    } else {
+      next({ name: 'login' })
+    }
+  }
 })
 
 export default router
