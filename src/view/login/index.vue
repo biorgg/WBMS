@@ -6,53 +6,40 @@
           Icon(type="md-planet" style="width: 56px;height: 56px;color: #409EFF;font-size:56px")
           h2(class="login-title color-main") 欢迎登录
         FormItem(prop="username")
-          Input(name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="请输入用户名")
+          Input(name="username" type="text" clearable v-model="loginForm.username" autoComplete="on" placeholder="请输入用户名")
             Icon(type="ios-person-outline" slot="prepend")
         FormItem(prop="password")
-          Input(name="password" type="password" @keyup.enter.native="handleLogin"  v-model="loginForm.password" autoComplete="on" placeholder="请输入密码")
+          Input(name="password" type="password" clearable  @keyup.enter.native="handleLogin"  v-model="loginForm.password" autoComplete="on" placeholder="请输入密码")
             Icon(type="ios-lock-outline" slot="prepend" )
         FormItem(style="margin-bottom: 60px")
           Button(style="width: 100%" type="info" size="large" :loading="loading" @click.native.prevent="handleLogin") 登录
-    img(:src="login_center_bg" class="login-center-layout")
+    img(:src="LoginCenterBg" class="login-center-layout")
 </template>
 
 <script>
-import login_center_bg from '@/assets/images/login_center_bg.png'
+import LoginCenterBg from '@/assets/images/login_center_bg.png'
 
 export default {
   name: 'login',
   data () {
-    const validateUsername = (rule, value, callback) => {
-      // if (!isvalidUsername(value)) {
-      //   callback(new Error('请输入正确的用户名'))
-      // } else {
-      //   callback()
-      // }
-    }
-    const validatePass = (rule, value, callback) => {
-      if (value.length < 3) {
-        callback(new Error('密码不能小于3位'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
         username: 'admin',
         password: '123456'
       },
       loginRules: {
-        // username: [{required: true, trigger: 'blur', validator: validateUsername}],
-        // password: [{required: true, trigger: 'blur', validator: validatePass}]
+        username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
+        password: [{required: true, message: '密码不能为空', trigger: 'blur'}]
       },
       loading: false,
-      login_center_bg
+      LoginCenterBg
     }
   },
-  created () {
-    console.log(this.login_center_bg)
-  },
+  created () {},
   methods: {
+    handleLogin: function () {
+      console.log(111111)
+    }
   }
 }
 </script>
