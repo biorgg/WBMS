@@ -38,7 +38,13 @@ export default {
   created () {},
   methods: {
     handleLogin: function () {
-      console.log(111111)
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          console.log(111111)
+        } else {
+          this.$Message.error('请填写完整信息')
+        }
+      })
     }
   }
 }

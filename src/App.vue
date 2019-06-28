@@ -11,9 +11,4 @@ export default {
 </script>
 
 <style lang="less">
-  .main{
-    .kk{
-      color: red
-    }
-  }
 </style>
