@@ -40,7 +40,7 @@ export default {
     handleLogin: function () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          console.log(1)
+
         } else {
           this.$Message.error('请填写完整信息')
         }

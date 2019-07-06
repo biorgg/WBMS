@@ -1,5 +1,5 @@
 /**
- * 作用：负责发送ajax请求
+ * 作用：负责发送ajax请求,并对请求和响应进行拦截,实现更丰富的功能
  */
 import Config from './../config'
 import axios from 'axios'
@@ -133,8 +133,8 @@ class Http {
       references = { data }
     }
     // intercept mock request in env which is not 'development'
-    const { baseURL } = rest
-    if (!baseURL && /^(\/mock\/)/.test(url) && process.env.NODE_ENV !== 'development') return Promise.resolve({data: null})
+    // const { baseURL } = rest
+    // if (!baseURL && /^(\/mock\/)/.test(url) && process.env.NODE_ENV !== 'development') return Promise.resolve({data: null})
     // adjust the request method, in order to refer data by different ways
     return instance.request({
       method,
