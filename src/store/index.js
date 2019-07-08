@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { getStore } from '@/util'
-import { Message } from 'iview';
+import { setStore } from '@/util'
+import { Message } from 'iview'
 
-// import user from './modules/user';
+import user from './modules/user'
 // import position from './modules/position';
 // import state from './state';
 // import getters from './getters';
@@ -14,13 +14,10 @@ import { Message } from 'iview';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  // modules: {
-  //   user, position
-  // },
-  state: {
-    name: getStore('name') ? getStore('name') : null, // 用户 name
-    token: getStore('token') ? getStore('token') : null // 用户 token
+  modules: {
+    user
   },
+  state: {},
   getters: {
     // 用户 name
     name: state => state.user.name,
@@ -42,9 +39,9 @@ export default new Vuex.Store({
           commit('user/SETTOKEN', res.data.token)
           setStore('token', res.data.token)
           commit('user/SETALLROLE', res.data.roles)
-          setStore('allRole', res.data.roles)
-          commit('user/SETCURRENTROLE', res.data.roles[0].roleId)
-          setStore('currentRole', res.data.roles[0].roleId)
+          // setStore('allRole', res.data.roles)
+          // commit('user/SETCURRENTROLE', res.data.roles[0].roleId)
+          // setStore('currentRole', res.data.roles[0].roleId)
           return Promise.resolve(res)
         } else {
           return Promise.reject(res)

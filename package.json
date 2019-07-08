@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "iview": "^3.4.2",
+    "js-sha512": "^0.8.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "vue": "^2.5.2",

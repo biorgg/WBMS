@@ -18,6 +18,7 @@
 
 <script>
 import LoginCenterBg from '@/assets/images/login_center_bg.png'
+const sha512 = require('js-sha512')
 
 export default {
   name: 'login',
@@ -40,7 +41,12 @@ export default {
     handleLogin: function () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          this.loading = true
+          let timestamp = new Date().getTime()
+          let pwd1 = sha512(`${this.loginForm.password}:yzyx`)
+          let pwd2 = sha512(`${pwd1}${timestamp}`)
 
+          this.$Message.success('登录成功！')
         } else {
           this.$Message.error('请填写完整信息')
         }
