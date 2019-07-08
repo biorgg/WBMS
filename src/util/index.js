@@ -1,4 +1,4 @@
-import config from './../config';
+import config from './../config'
 
 // 存储localStorage
 export const setStore = (name, content) => {

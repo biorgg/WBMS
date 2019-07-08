@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import LoginCenterBg from '@/assets/images/login_center_bg.png'
 const sha512 = require('js-sha512')
 
@@ -38,6 +39,7 @@ export default {
   },
   created () {},
   methods: {
+    ...mapActions(['login']),
     handleLogin: function () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -45,8 +47,22 @@ export default {
           let timestamp = new Date().getTime()
           let pwd1 = sha512(`${this.loginForm.password}:yzyx`)
           let pwd2 = sha512(`${pwd1}${timestamp}`)
+          this.login({
+            jobNo: this.loginForm.username,
+            pwd: pwd2,
+            timestamp: timestamp
+          }).then(defRole => {
+            console.log(defRole)
+            this.$Message.success({
+              content: '登录成~！',
+              duration: 1,
+              onClose: () => {
+                // this.$router.replace
+                this.$Message.error('已经结束')
+              }
 
-          this.$Message.success('登录成功！')
+            })
+          })
         } else {
           this.$Message.error('请填写完整信息')
         }
