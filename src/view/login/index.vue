@@ -52,9 +52,9 @@ export default {
             pwd: pwd2,
             timestamp: timestamp
           }).then(defRole => {
-            console.log(defRole)
+            console.log('4433' + defRole)
             this.$Message.success({
-              content: '登录成~！',
+              content: '登录成功！',
               duration: 1,
               onClose: () => {
                 // this.$router.replace
@@ -62,6 +62,8 @@ export default {
               }
 
             })
+          }).catch(() => {
+            console.log('dddddddd')
           })
         } else {
           this.$Message.error('请填写完整信息')
