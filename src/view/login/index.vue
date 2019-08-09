@@ -26,8 +26,8 @@ export default {
   data () {
     return {
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
@@ -62,8 +62,10 @@ export default {
               }
 
             })
-          }).catch(() => {
-            console.log('dddddddd')
+          }).catch(err => {
+            this.$Message.error({
+              content: err.message
+            });
           })
         } else {
           this.$Message.error('请填写完整信息')
