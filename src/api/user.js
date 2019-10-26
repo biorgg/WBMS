@@ -10,6 +10,7 @@ const login = async ({jobNo = '', pwd = '', timestamp = ''}) => {
   })
   return res.data
 }
+
 export default {
   login
 }

@@ -28,7 +28,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {
     // 登陆
-    login ({commit}, params) {
+    async login ({commit}, params) {
       // userApi.login(params, res => {
       //   if (res.status === 1) {
       //     // if (!res.data.roles[0]) {
@@ -48,13 +48,12 @@ export default new Vuex.Store({
       //     return Promise.reject(res)
       //   }
       // })
-      return userApi.login(params).then(res => {
-        if (res.status === 1) {
-          return Promise.resolve(res)
-        } else {
-          return Promise.reject(res)
-        }
-      })
+      const res = await userApi.login(params)
+      if (res.status === 1) {
+        return Promise.resolve(res)
+      } else {
+        return Promise.reject(res)
+      }
     }
   }
 })
