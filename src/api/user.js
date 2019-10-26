@@ -4,7 +4,7 @@ import http from './../http'
 // 用户登录
 const login = async ({jobNo = '', pwd = '', timestamp = ''}) => {
   const res = await http.request({
-    url: 'user/login',
+    url: 'auth/login',
     method: 'POST',
     data: {jobNo, pwd, timestamp}
   })

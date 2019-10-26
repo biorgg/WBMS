@@ -52,20 +52,22 @@ export default {
             pwd: pwd2,
             timestamp: timestamp
           }).then(defRole => {
-            console.log('4433' + defRole)
+            this.loading = false
             this.$Message.success({
               content: '登录成功！',
               duration: 1,
               onClose: () => {
-                // this.$router.replace
-                this.$Message.error('已经结束')
+                this.$router.push({
+                  name: 'home_index'
+                })
               }
 
             })
           }).catch(err => {
             this.$Message.error({
               content: err.message
-            });
+            })
+            this.loading = false
           })
         } else {
           this.$Message.error('请填写完整信息')
