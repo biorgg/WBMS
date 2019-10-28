@@ -51,17 +51,16 @@ export default {
             jobNo: this.loginForm.username,
             pwd: pwd2,
             timestamp: timestamp
-          }).then(defRole => {
+          }).then(res => {
             this.loading = false
             this.$Message.success({
-              content: '登录成功！',
+              content: '登录成功,欢迎回来!',
               duration: 1,
               onClose: () => {
                 this.$router.push({
                   name: 'home_index'
                 })
               }
-
             })
           }).catch(err => {
             this.$Message.error({

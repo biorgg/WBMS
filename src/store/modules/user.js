@@ -11,6 +11,7 @@ const user = {
     SETNAME (state, params) {
       state.name = params
     },
+    // 设置 token
     SETTOKEN (state, params) {
       state.token = params
     }

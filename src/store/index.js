@@ -50,6 +50,10 @@ export default new Vuex.Store({
       // })
       const res = await userApi.login(params)
       if (res.status === 1) {
+        setStore('token', res.data.token)
+        setStore('name', res.data.name)
+        commit('user/SETNAME', res.data.name)
+        commit('user/SETTOKEN', res.data.token)
         return Promise.resolve(res)
       } else {
         return Promise.reject(res)
