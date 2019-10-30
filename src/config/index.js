@@ -7,7 +7,7 @@ export default {
   storePrefix: 'WBMS_',
   // 存储axios中的一些变量
   httpConfig: {
-    baseURL: 'https://gateway.chinayzyx.com',
+    baseURL: 'https://gw.chinayzyx.com',
     timeout: 10000
   }
 }
