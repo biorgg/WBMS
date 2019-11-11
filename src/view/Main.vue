@@ -1,18 +1,25 @@
 <template lang="pug">
   .main
     .main-top
+      .top-button(@click="shrink=!shrink")
+        Icon(type="md-reorder" :style="{transform: 'rotateZ(' + (shrink ? '-90' : '0') + 'deg)'}")
     .sidebar-menu-con
-      .ivu-shrinkable-menu
+      .ivu-shrinkable-menu(:style="!shrink?'width:230px':'width:60px'")
         Menu(theme='dark' width='auto')
           Submenu(name='sideMenu')
-    .single-page-con
+    .single-page-con(:style="!shrink?'left:230px;width:calc(100vw - 230px);':'left:60px;width:calc(100vw - 60px);'")
       .single-page
         router-view
 </template>
 
 <script>
 export default {
-  name: 'Main'
+  name: 'Main',
+  data: function () {
+    return {
+      shrink: false
+    }
+  }
 }
 </script>
 
@@ -29,25 +36,38 @@ export default {
       top:0;
       left:0;
       background:#17B3A3;
+      .top-button{
+        font-size: 20px;
+        width:50px;
+        height:50px;
+        color:#fff;
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+        &:hover{
+          background:#009999
+        }
+      }
       }
     .sidebar-menu-con{
-        width:230px;
-        overflow-x: hidden;
+      width:230px;
+      overflow-x: hidden;
+      height: 100%;
+      position: fixed;
+      top: 50px;
+      left: 0;
+      z-index: 21;
+      transition: width .3s;
+      .ivu-shrinkable-menu{
         height: 100%;
-        position: fixed;
-        top: 50px;
-        left: 0;
-        z-index: 21;
-        transition: width .3s;
-        .ivu-shrinkable-menu{
-          height: 100%;
-          width: 100%;
-          background:#495060
-        }
+        width: 100%;
+        background:#495060;
+        transition: all .3s;
+      }
     }
     .single-page-con{
         position: absolute;
-        left:230px;
+        // left:230px;
         width:calc(100vw - 230px);
         height:calc(100vh - 50px);
         top: 50px;
@@ -56,9 +76,9 @@ export default {
         overflow: auto;
         background-color: #F0F0F0;
         z-index: 1;
-        transition: left .3s;
+        transition: all .3s;
         .single-page{
-            margin: 10px;
+          margin: 10px;
         }
     }
 }
