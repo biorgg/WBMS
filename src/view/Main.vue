@@ -1,10 +1,10 @@
 <template lang="pug">
   .main
+    .main-top
     .sidebar-menu-con
       .ivu-shrinkable-menu
-        Menu(theme='dark')
+        Menu(theme='dark' width='auto')
           Submenu(name='sideMenu')
-    .main-header-con
     .single-page-con
       .single-page
         router-view
@@ -18,13 +18,24 @@ export default {
 
 <style lang="less">
 .main{
-    position: absolute;
+    position: relative;
+    padding-top: 50px;
     width: 100%;
     height: 100%;
+    .main-top{
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      top:0;
+      left:0;
+      background:#17B3A3;
+      }
     .sidebar-menu-con{
+        width:230px;
+        overflow-x: hidden;
         height: 100%;
         position: fixed;
-        top: 0;
+        top: 50px;
         left: 0;
         z-index: 21;
         transition: width .3s;
@@ -36,7 +47,10 @@ export default {
     }
     .single-page-con{
         position: absolute;
-        top: 65px;
+        left:230px;
+        width:calc(100vw - 230px);
+        height:calc(100vh - 50px);
+        top: 50px;
         right: 0;
         bottom: 0;
         overflow: auto;
