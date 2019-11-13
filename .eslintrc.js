@@ -11,7 +11,7 @@ module.exports = {
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/essential', 
+    'plugin:vue/essential',
     // https://github.com/standard/standard/blob/master/docs/RULES-en.md
     'standard'
   ],
@@ -26,6 +26,12 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 不能有声明后未被使用的变量或参数
-    "no-unused-vars": [0, {"vars": "all", "args": "after-used"}],
+    "no-unused-vars": [0, {
+      "vars": "all",
+      "args": "after-used"
+    }],
+    'vue/no-parsing-error': [2, {
+      "x-invalid-end-tag": false
+    }]
   }
 }
