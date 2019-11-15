@@ -59,6 +59,8 @@ export default {
 </script>
 
 <style lang="less">
+@import './../my-theme/index.less';
+
 .main {
   position: relative;
   padding-top: 50px;
@@ -70,7 +72,7 @@ export default {
     height: 50px;
     top: 0;
     left: 0;
-    background: #17b3a3;
+    background: @primary-color;
     .top-logo {
       float: left;
       height: 50px;
@@ -90,7 +92,7 @@ export default {
       line-height: 50px;
       cursor: pointer;
       &:hover {
-        background: #009999;
+        background:shade(@primary-color, 10%);
       }
     }
   }
@@ -103,12 +105,6 @@ export default {
     left: 0;
     z-index: 21;
     transition: width 0.3s;
-    // .ivu-shrinkable-menu{
-    //   height: 100%;
-    //   width: 100%;
-    //   background:#495060;
-    //   transition: all .3s;
-    // }
   }
   .single-page-con {
     position: absolute;
@@ -125,7 +121,6 @@ export default {
     transition: all 0.3s;
     .single-page {
       position: relative;
-      // margin: 10px;
       height: 100%;
       width: 100%;
     }
