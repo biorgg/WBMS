@@ -128,9 +128,3 @@ export default {
   }
 }
 </style>
-
-<style scoped>
-  /deep/ .ivu-dropdown-item{
-    min-width:150px;
-  }
-</style>
