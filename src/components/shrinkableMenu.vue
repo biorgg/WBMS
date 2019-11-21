@@ -1,44 +1,72 @@
 <template>
   <div class="ivu-shrinkable-menu" :style="'width:'+(!shrink?'230px':'60px')">
-    <!-- <Menu theme='dark' width='auto'>
-      <Submenu name='sideMenu'></Submenu>
-    </Menu>-->
-    <Menu theme="dark" width="auto" accordion active-name="1-2" :open-names="['1']">
-      <Submenu name="1">
-        <template slot="title">
-          <Icon type="ios-analytics" />Navigation One
+    <template v-if="!shrink">
+      <Menu ref="sideMenu" theme="dark" width="auto" accordion :active-name="activeName" :open-names="['1']" @on-select="handleChange">
+        <template v-for="(item,index) in menuList" >
+          <Submenu v-if="!checkEmptyArray(item.children)" :name="index" :key="item.name">
+            <template slot="title">
+              <Icon :type="item.icon" />{{item.title}}
+            </template>
+            <template v-for="ite in item.children" >
+              <MenuItem v-if="checkEmptyArray(ite.children)" :key="ite.name" :name="ite.name">
+                <Icon :type="ite.icon" :key="ite.name"></Icon>
+                {{ite.title}}
+              </MenuItem>
+              <Submenu v-if="!checkEmptyArray(ite.children)" :key="ite.name" :name="ite.name">
+                <template slot="title">
+                  <Icon :type="ite.icon" />
+                  {{ite.title}}
+                </template>
+                <MenuItem v-for="iite in ite.children" :key="iite.name" :name="iite.title">
+                  <Icon :type="iite.icon" />
+                  {{iite.name}}
+                </MenuItem>
+              </Submenu>
+            </template>
+          </Submenu>
+          <MenuItem v-if="checkEmptyArray(item.children)" :key="item.name" :name="item.name">
+            <Icon :type="item.icon" :key="item.name"/>
+            {{item.title}}
+          </MenuItem>
         </template>
-        <MenuGroup title="Item 1">
-          <MenuItem name="1-1">Option 1</MenuItem>
-          <MenuItem name="1-2">Option 2</MenuItem>
-        </MenuGroup>
-        <MenuGroup title="Item 2">
-          <MenuItem name="1-3">Option 3</MenuItem>
-          <MenuItem name="1-4">Option 4</MenuItem>
-        </MenuGroup>
-      </Submenu>
-      <Submenu name="2">
-        <template slot="title">
-          <Icon type="ios-filing" />Navigation Two
+      </Menu>
+    </template>
+    <template v-if="shrink" v-for="(item,index) in menuList" >
+      <Dropdown transfer placement="right-start" :key="index" @on-click="handleChange">
+        <div class="menu-button">
+          <Icon :size="20" color="white" :type="item.icon"></Icon>
+        </div>
+        <template v-if="!checkEmptyArray(item.children)" v-for="(child, i) in item.children">
+            <DropdownMenu slot="list" :key="i">
+                <DropdownItem v-if="checkEmptyArray(child.children)" :name="child.name">
+                  <Icon type="ios-play"></Icon>
+                  <span style="padding-left:10px;">{{ child.title }}</span>
+                </DropdownItem>
+                <Dropdown v-else transfer placement="right-start">
+                  <DropdownItem>
+                      <Icon type="ios-play"></Icon>
+                      <span style="padding-left:10px;">{{ child.title }}</span>
+                      <Icon style="padding-left:10px;" type="ios-arrow-forward"></Icon>
+                  </DropdownItem>
+                  <DropdownMenu slot="list" :key="i">
+                    <DropdownItem  v-for="(iite,ii) in child.children" :key="ii" :name="iite.name">
+                      <Icon type="ios-play"></Icon>
+                      <span style="padding-left:10px;">{{ iite.title }}</span>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+            </DropdownMenu>
         </template>
-        <MenuItem name="2-1">Option 5</MenuItem>
-        <MenuItem name="2-2">Option 6</MenuItem>
-        <Submenu name="3">
-          <template slot="title">Submenu</template>
-          <MenuItem name="3-1">Option 7</MenuItem>
-          <MenuItem name="3-2">Option 8</MenuItem>
-        </Submenu>
-      </Submenu>
-      <Submenu name="4">
-        <template slot="title">
-          <Icon type="ios-cog" />Navigation Three
+        <template v-if="checkEmptyArray(item.children)">
+          <DropdownMenu slot="list">
+            <DropdownItem :name="item.name" :key="index">
+              <Icon type="ios-play"></Icon>
+              <span style="padding-left:10px;">{{ item.title }}</span>
+            </DropdownItem>
+          </DropdownMenu>
         </template>
-        <MenuItem name="4-1">Option 9</MenuItem>
-        <MenuItem name="4-2">Option 10</MenuItem>
-        <MenuItem name="4-3">Option 11</MenuItem>
-        <MenuItem name="4-4">Option 12</MenuItem>
-      </Submenu>
-    </Menu>
+      </Dropdown>
+    </template>
   </div>
 </template>
 
@@ -49,9 +77,35 @@ export default {
     shrink: {
       type: Boolean,
       default: false
+    },
+    menuList: {
+      type: Array,
+      default: () => []
     }
   },
-  methods: {}
+  data () {
+    return {
+      activeName: ''
+    }
+  },
+  updated () {
+    this.$nextTick(() => {
+      if (this.$refs.sideMenu) {
+        this.$refs.sideMenu.updateOpened()
+      }
+    })
+    this.activeName = this.$route.name
+  },
+  methods: {
+    checkEmptyArray (arr) {
+      return !(arr && arr instanceof Array && arr.length > 0)
+    },
+    handleChange (name) {
+      this.$router.push({
+        name: name
+      })
+    }
+  }
 }
 </script>
 
@@ -61,5 +115,22 @@ export default {
   width: 100%;
   background: #495060;
   transition: all 0.3s;
+
+  .menu-button{
+    width:60px;
+    height:60px;
+    line-height:60px;
+    text-align:center;
+    cursor: pointer;
+      &:hover {
+        background:shade(#495060, 10%);
+      }
+  }
 }
+</style>
+
+<style scoped>
+  /deep/ .ivu-dropdown-item{
+    min-width:150px;
+  }
 </style>

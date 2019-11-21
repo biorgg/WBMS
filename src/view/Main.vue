@@ -13,7 +13,7 @@
         .top-button
           full-screen(v-model="isFullScreen")
         .top-button(style="width:auto;padding:0 10px 0")
-          Dropdown(transfer)
+          Dropdown(transfer trigger="click")
             p(style='font-size:14px')
               | 系统管理员
               Icon(type="ios-arrow-down")
@@ -24,7 +24,7 @@
           Tooltip(content="退出登录" placement="bottom" transfer)
             Icon(type="md-power")
     .sidebar-menu-con
-      shrinkable-menu(:shrink="shrink")
+      shrinkable-menu(:shrink="shrink" :menuList="menuList")
     .single-page-con(:style="!shrink?'left:230px;width:calc(100vw - 230px);':'left:60px;width:calc(100vw - 60px);'")
       .single-page
         Card
@@ -41,11 +41,69 @@ export default {
     fullScreen,
     shrinkableMenu
   },
-  data: function () {
+  data () {
     return {
       shrink: false,
       isFullScreen: false,
-      menuData: [{}]
+      menuList: [
+        {
+          title: '这是第一个菜单',
+          name: 'NavigationOne',
+          icon: 'ios-analytics',
+          children: [
+            {
+              title: '1-1',
+              name: '1-1',
+              icon: 'ios-analytics',
+              children: [
+                {
+                  title: '1-1-1',
+                  name: '1-1-1',
+                  icon: 'ios-analytics',
+                  children: []
+                },
+                {
+                  title: '1-1-2',
+                  name: '1-1-2',
+                  icon: 'ios-analytics',
+                  children: []
+                },
+                {
+                  title: '1-1-3',
+                  name: '1-1-3',
+                  icon: 'ios-analytics',
+                  children: []
+                }
+              ]
+            },
+            {
+              title: '1-2',
+              name: '1-2',
+              icon: 'ios-analytics',
+              children: []
+            }
+          ]
+        },
+        {
+          title: '这是第二个菜单',
+          name: 'NavigationTwo',
+          icon: 'ios-filing',
+          children: [
+            {
+              title: '2-1',
+              name: '2-1',
+              icon: 'ios-analytics',
+              children: []
+            }
+          ]
+        },
+        {
+          title: '这是第三个菜单',
+          name: 'NavigationThree',
+          icon: 'ios-cog'
+          // children: []
+        }
+      ]
     }
   },
   methods: {
