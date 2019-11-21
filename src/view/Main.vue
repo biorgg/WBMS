@@ -28,7 +28,8 @@
     .single-page-con(:style="!shrink?'left:230px;width:calc(100vw - 230px);':'left:60px;width:calc(100vw - 60px);'")
       .single-page
         Card
-          router-view
+          transition(name="slide-fade" mode="out-in")
+            router-view
 </template>
 
 <script>
@@ -183,5 +184,14 @@ export default {
       width: 100%;
     }
   }
+}
+
+.slide-fade-enter-active {
+    transition: all .3s ease;
+}
+.slide-fade-enter,.slide-fade-leave-to
+{
+    transform: translateX(30px);
+    opacity: 0;
 }
 </style>
