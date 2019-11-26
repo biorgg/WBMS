@@ -5,7 +5,7 @@ const user = {
   state: {
     name: getStore('name') ? getStore('name') : null, // 用户 name
     token: getStore('token') ? getStore('token') : null, // 用户 token
-    theme: 'primary'
+    theme: getStore('theme') ? getStore('theme') : 'primary'
   },
   mutations: {
     // 设置用户名

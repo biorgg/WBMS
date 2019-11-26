@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { setStore } from '@/util'
+
 export default {
   name: 'userDropDown',
   data () {
@@ -48,6 +50,7 @@ export default {
     changeColor (color) {
       if (color !== this.$store.state.user.theme) {
         this.$store.commit('user/SETTHEME', color)
+        setStore('theme', color)
       }
     }
   }
