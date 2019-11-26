@@ -13,13 +13,7 @@
         .top-button
           full-screen(v-model="isFullScreen")
         .top-button(style="width:auto;padding:0 10px 0")
-          Dropdown(transfer trigger="click")
-            p(style='font-size:14px')
-              | 系统管理员
-              Icon(type="ios-arrow-down")
-            DropdownMenu(slot="list")
-              DropdownItem 主题设置
-              DropdownItem 修改密码
+          user-drop-down
         .top-button(@click="")
           Tooltip(content="退出登录" placement="bottom" transfer)
             Icon(type="md-power")
@@ -35,12 +29,14 @@
 <script>
 import fullScreen from '@/components/fullscreen.vue'
 import shrinkableMenu from '@/components/shrinkableMenu.vue'
+import userDropDown from '@/components/userDropDown.vue'
 
 export default {
   name: 'Main',
   components: {
     fullScreen,
-    shrinkableMenu
+    shrinkableMenu,
+    userDropDown
   },
   data () {
     return {
@@ -118,7 +114,7 @@ export default {
 </script>
 
 <style lang="less">
-@import './../my-theme/index.less';
+// @import './../my-theme/index.less';
 
 .main {
   position: relative;
@@ -131,7 +127,7 @@ export default {
     height: 50px;
     top: 0;
     left: 0;
-    background: @primary-color;
+    // background: @primary-color;
     .top-logo {
       float: left;
       height: 50px;
@@ -150,9 +146,9 @@ export default {
       text-align: center;
       line-height: 50px;
       cursor: pointer;
-      &:hover {
-        background:shade(@primary-color, 10%);
-      }
+      // &:hover {
+      //   background:shade(@primary-color, 10%);
+      // }
     }
   }
   .sidebar-menu-con {

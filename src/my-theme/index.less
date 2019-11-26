@@ -1,3 +1,82 @@
 @import '~iview/src/styles/index.less';
 
-@primary-color :#17b3a3;
+//默认颜色
+@primary-color:#2d8cf0; 
+// 红色
+@red-theme-color: #ff4c52;
+// 青色
+@cyan-theme-color: #0bb2d4;
+// 绿色
+@green-theme-color: #11c26d;
+// 蓝绿色
+@turquoise-theme-color: #17b3a3;
+// 靛青色
+@indigo-theme-color:#667afa;
+// 棕色
+@brown-theme-color:#997b71;
+// 紫色
+@purple-theme-color:#9463f7;
+// 灰色
+@gray-theme-color: #757575;
+// 橙色
+@orange-theme-color: #eb6709;
+// 粉色
+@pink-theme-color: #f74584;
+// 黄色
+@yellow-theme-color:#fcb900;
+
+
+
+
+// 默认蓝色
+.theme(@color){
+    .main{
+        .main-top{
+            background: @color
+        }
+        .top-button {
+            &:hover {
+              background:shade(@color, 10%);
+            }
+          }
+        }
+    .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active, .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active:hover {
+        background: @color !important
+    }
+}
+.primary{
+    .theme(@primary-color);
+}
+.red{
+    .theme(@red-theme-color);
+}
+.cyan{
+    .theme(@cyan-theme-color);
+}
+.green{
+    .theme(@green-theme-color)
+}
+.turquoise{
+    .theme(@turquoise-theme-color)
+}
+.indigo{
+    .theme(@indigo-theme-color);
+}
+.brown{
+    .theme(@brown-theme-color)
+}
+.purple{
+    .theme(@purple-theme-color)
+}
+.gray{
+    .theme(@gray-theme-color)
+}
+.orange{
+    .theme(@orange-theme-color)
+}
+.pink{
+    .theme(@pink-theme-color)
+}
+.yellow{
+    .theme(@yellow-theme-color);
+}
