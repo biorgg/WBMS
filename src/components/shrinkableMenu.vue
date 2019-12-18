@@ -1,6 +1,6 @@
 <template>
   <div class="ivu-shrinkable-menu" :style="'width:'+(!shrink?'230px':'60px')">
-    <template v-if="!shrink">
+    <div v-if="!shrink" class="fade-in">
       <Menu ref="sideMenu" theme="dark" width="auto" accordion :active-name="activeName" :open-names="['1']" @on-select="handleChange">
         <template v-for="(item,index) in menuList" >
           <Submenu v-if="!checkEmptyArray(item.children)" :name="index" :key="item.name">
@@ -30,8 +30,9 @@
           </MenuItem>
         </template>
       </Menu>
-    </template>
-    <template v-if="shrink" v-for="(item,index) in menuList" >
+    </div>
+    <div v-if="shrink" class="fade-in2">
+      <template v-for="(item,index) in menuList" >
       <Dropdown transfer placement="right-start" :key="index" @on-click="handleChange">
         <div class="menu-button">
           <Icon :size="20" color="white" :type="item.icon"></Icon>
@@ -66,7 +67,8 @@
           </DropdownMenu>
         </template>
       </Dropdown>
-    </template>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -126,5 +128,22 @@ export default {
         background:shade(#495060, 10%);
       }
   }
-}
+
+  .fade-in{
+    animation:fdAm .8s;
+      @keyframes fdAm{
+        0%   {opacity:0;}
+        30%  {opacity:0;}
+        100% {opacity:1;}
+      }
+    }
+  .fade-in2{
+    animation:fdAm2 .8s;
+      @keyframes fdAm2{
+        0%   {opacity:0;}
+        30%  {opacity:0;}
+        100% {opacity:1;}
+      }
+    }
+  }
 </style>
