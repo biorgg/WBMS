@@ -21,7 +21,7 @@
       shrinkable-menu(:shrink="shrink" :menuList="menuList")
     .single-page-con(:style="!shrink?'left:230px;width:calc(100vw - 230px);':'left:60px;width:calc(100vw - 60px);'")
       .single-page
-        Card
+        Card(style="height:100%")
           transition(name="slide-fade" mode="out-in")
             router-view
 </template>
