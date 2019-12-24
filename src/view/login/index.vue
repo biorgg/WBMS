@@ -81,31 +81,59 @@ export default {
   /deep/ .ivu-card-body{
     padding: 16px 30px 16px
   }
-  .login-form-layout {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 360px;
-    margin: 140px auto;
-    border-top: 10px solid #409EFF;
+  .login{
+    // background-image: linear-gradient(160deg, #fff1eb 0%,#ace0f9 100%);
+    height:100vh;
+    widows: 100vw;
+    background: linear-gradient(-45deg,  #ee7752, #e45f92, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .login-form-layout {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top:0;
+      width: 360px;
+      margin: 140px auto;
+      border-top: 10px solid #409EFF;
+      background-image: linear-gradient(180deg, #fff 0%,rgb(190, 232, 243) 100%);
+      transition: all 0.2s linear;
+       z-index: 3;
+      &:hover{
+        top:-5px;
+      }
 
-    .login-title {
-      margin:20px 0 20px;
-      text-align: center;
+      .login-title {
+        margin:20px 0 20px;
+        text-align: center;
+      }
+
+      /deep/ .ivu-input{
+        height: 40px;
+        line-height: 40px;
+      }
     }
 
-    /deep/ .ivu-input{
-      height: 40px;
-      line-height: 40px;
+    .login-center-layout {
+      background: rgb(38, 43, 48);
+      z-index: 2;
+      opacity: 0.2;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      margin-top: 200px;
     }
-  }
-
-  .login-center-layout {
-    background: #409EFF;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    margin-top: 200px;
   }
 </style>
