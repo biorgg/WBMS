@@ -13,7 +13,7 @@
           Input(name="password" type="password" clearable  @keyup.enter.native="handleLogin"  v-model="loginForm.password" autoComplete="on" placeholder="请输入密码")
             Icon(type="ios-lock-outline" slot="prepend" )
         FormItem(style="margin-bottom: 60px")
-          Button(style="width: 100%" type="info" size="large" :loading="loading" @click.native.prevent="handleLogin") 登录
+          Button(style="width:100%;height:45px;margin-top:15px" type="info" size="large" :loading="loading" @click.native.prevent="handleLogin") 登录
     img(:src="LoginCenterBg" class="login-center-layout")
 </template>
 
@@ -80,7 +80,7 @@ export default {
 
 <style scoped lang="less">
   /deep/ .ivu-card-body{
-    padding: 16px 30px 16px
+    padding: 16px 30px 0;
   }
   .login{
     position: relative;
