@@ -20,4 +20,7 @@ export default {
 
 <style lang="less">
 @import './my-theme/index.less';
+html,body,#app{
+ height: 100%;
+}
 </style>

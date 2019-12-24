@@ -1,6 +1,7 @@
 <template lang="pug">
   .login
     Card(class="login-form-layout")
+      h1(class="title") 某某后台管理系统
       Form(autocomplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left")
         div(style="text-align: center")
           Icon(type="md-planet" style="width: 56px;height: 56px;color: #409EFF;font-size:56px")
@@ -82,9 +83,8 @@ export default {
     padding: 16px 30px 16px
   }
   .login{
-    // background-image: linear-gradient(160deg, #fff1eb 0%,#ace0f9 100%);
-    height:100vh;
-    widows: 100vw;
+    position: relative;
+    height:100%;
     background: linear-gradient(-45deg,  #ee7752, #e45f92, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradientBG 20s ease infinite;
@@ -99,19 +99,32 @@ export default {
         background-position: 0% 50%;
       }
     }
+
     .login-form-layout {
       position: absolute;
-      left: 0;
-      right: 0;
-      top:0;
+      left: 50%;
+      top:50%;
       width: 360px;
-      margin: 140px auto;
+      transform: translate( -50%, -50%);
       border-top: 10px solid #409EFF;
       background-image: linear-gradient(180deg, #fff 0%,rgb(190, 232, 243) 100%);
       transition: all 0.2s linear;
        z-index: 3;
       &:hover{
-        top:-5px;
+        top:49%;
+      }
+
+      .title{
+        color:#fff;
+        width:100vw;
+        text-align: center;
+        position: absolute;
+        top:-18%;
+        left:50%;
+        transform: translate( -50%, 0);
+        font-size: 35px;
+        font-weight: 400;
+        white-space:nowrap;
       }
 
       .login-title {
@@ -126,6 +139,7 @@ export default {
     }
 
     .login-center-layout {
+      position: absolute;
       background: rgb(38, 43, 48);
       z-index: 2;
       opacity: 0.2;
@@ -133,7 +147,8 @@ export default {
       height: auto;
       max-width: 100%;
       max-height: 100%;
-      margin-top: 200px;
+      top:50%;
+      transform: translate( 0, -50%);
     }
   }
 </style>
