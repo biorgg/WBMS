@@ -7,11 +7,10 @@
           Icon(type="md-planet" style="width: 56px;height: 56px;color: #409EFF;font-size:56px")
           h2(class="login-title color-main") 欢迎登录
         FormItem(prop="username")
-          Input(name="username" type="text" clearable v-model="loginForm.username" autoComplete="on" placeholder="请输入用户名")
+          Input(name="username" type="text" clearable v-model="loginForm.username" placeholder="请输入用户名")
             Icon(type="ios-person-outline" slot="prepend")
         FormItem(prop="password")
-          Input(name="password" type="password" clearable  @keyup.enter.native="handleLogin"  v-model="loginForm.password" autoComplete="on" placeholder="请输入密码")
-            Icon(type="ios-lock-outline" slot="prepend" )
+          inputPassWord(v-model="loginForm.password" placeholder="请输入密码" :icon="'ios-lock-outline'" @keyup.enter.native="handleLogin")
         FormItem(style="margin-bottom: 60px")
           Button(style="width:100%;height:45px;margin-top:15px" type="info" size="large" :loading="loading" @click.native.prevent="handleLogin") 登录
     img(:src="LoginCenterBg" class="login-center-layout")
@@ -20,10 +19,14 @@
 <script>
 import { mapActions } from 'vuex'
 import LoginCenterBg from '@/assets/images/login_center_bg.png'
+import inputPassWord from '@/components/inputPassWord.vue'
 const sha512 = require('js-sha512')
 
 export default {
   name: 'login',
+  components: {
+    inputPassWord
+  },
   data () {
     return {
       loginForm: {
@@ -31,16 +34,37 @@ export default {
         password: ''
       },
       loginRules: {
-        username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
-        password: [{required: true, message: '密码不能为空', trigger: 'blur'}]
+        username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
+        password: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
       },
       loading: false,
       LoginCenterBg
+      // readonly: false
     }
   },
-  created () {},
+  // computed: {
+  //   inputType () {
+  //     if (this.inputTypeHandler()) {
+  //       return 'text'
+  //     } else {
+  //       return 'password'
+  //     }
+  //   }
+  // },
+  created () { },
   methods: {
     ...mapActions(['login']),
+    // inputTypeHandler: function () {
+    //   if (this.loginForm.password) {
+    //     return false
+    //   } else {
+    //     this.readonly = true
+    //     setTimeout(() => {
+    //       this.readonly = false
+    //     }, 0)
+    //     return true
+    //   }
+    // },
     handleLogin: function () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -79,76 +103,79 @@ export default {
 </script>
 
 <style scoped lang="less">
-  /deep/ .ivu-card-body{
-    padding: 16px 30px 0;
+/deep/ .ivu-card-body {
+  padding: 16px 30px 0;
+}
+.login {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(-45deg, #ee7752, #e45f92, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease infinite;
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
-  .login{
-    position: relative;
-    height:100%;
-    background: linear-gradient(-45deg,  #ee7752, #e45f92, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradientBG 20s ease infinite;
-    @keyframes gradientBG {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+
+  .login-form-layout {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 360px;
+    transform: translate(-50%, -50%);
+    border-top: 10px solid #409eff;
+    background-image: linear-gradient(180deg, #fff 0%, rgb(190, 232, 243) 100%);
+    transition: all 0.2s linear;
+    z-index: 3;
+    &:hover {
+      top: 49%;
     }
 
-    .login-form-layout {
+    .title {
+      color: #fff;
+      width: 100vw;
+      text-align: center;
       position: absolute;
+      top: -18%;
       left: 50%;
-      top:50%;
-      width: 360px;
-      transform: translate( -50%, -50%);
-      border-top: 10px solid #409EFF;
-      background-image: linear-gradient(180deg, #fff 0%,rgb(190, 232, 243) 100%);
-      transition: all 0.2s linear;
-       z-index: 3;
-      &:hover{
-        top:49%;
-      }
-
-      .title{
-        color:#fff;
-        width:100vw;
-        text-align: center;
-        position: absolute;
-        top:-18%;
-        left:50%;
-        transform: translate( -50%, 0);
-        font-size: 35px;
-        font-weight: 400;
-        white-space:nowrap;
-      }
-
-      .login-title {
-        margin:20px 0 20px;
-        text-align: center;
-      }
-
-      /deep/ .ivu-input{
-        height: 40px;
-        line-height: 40px;
-      }
+      transform: translate(-50%, 0);
+      font-size: 35px;
+      font-weight: 400;
+      white-space: nowrap;
     }
 
-    .login-center-layout {
-      position: absolute;
-      background: rgb(38, 43, 48);
-      z-index: 2;
-      opacity: 0.2;
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 100%;
-      top:50%;
-      transform: translate( 0, -50%);
+    .login-title {
+      margin: 20px 0 20px;
+      text-align: center;
+    }
+
+    /deep/ .ivu-input {
+      height: 40px;
+      line-height: 40px;
     }
   }
+
+  .login-center-layout {
+    position: absolute;
+    background: rgb(38, 43, 48);
+    z-index: 2;
+    opacity: 0.2;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  .hide-input {
+    display: none;
+  }
+}
 </style>
