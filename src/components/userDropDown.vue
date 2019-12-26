@@ -26,25 +26,35 @@
             <Icon class="color-radio" color="#fcb900" type="ios-radio-button-on" @click="changeColor('yellow')"/>
         </div>
     </Modal>
+    <update-pwd :updatePwdModalStatus.sync="updatePwd.updatePwdModalStatus"></update-pwd>
     </div>
 </template>
 
 <script>
 import { setStore } from '@/util'
+import updatePwd from '@/components/updatePwd.vue'
 
 export default {
   name: 'userDropDown',
+  components: {
+    updatePwd
+  },
   data () {
     return {
       themModal: false,
-      checkTheme: ''
-
+      checkTheme: '',
+      updatePwd: {
+        updatePwdModalStatus: false
+      }
     }
   },
   methods: {
     handleClickUserDropdown (name) {
       if (name === 'set-theme') {
         this.themModal = true
+      }
+      if (name === 'set-pwd') {
+        this.$set(this.updatePwd, 'updatePwdModalStatus', true)
       }
     },
     changeColor (color) {
