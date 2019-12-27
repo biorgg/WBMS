@@ -7,7 +7,7 @@
           Icon(type="md-planet" style="width: 56px;height: 56px;color: #409EFF;font-size:56px")
           h2(class="login-title color-main") 欢迎登录
         FormItem(prop="username")
-          Input(name="username" type="text" clearable v-model="loginForm.username" placeholder="请输入用户名")
+          Input(name="username" type="text" :autofocus="true" clearable v-model="loginForm.username" placeholder="请输入用户名")
             Icon(type="ios-person-outline" slot="prepend")
         FormItem(prop="password")
           inputPassWord(v-model="loginForm.password" placeholder="请输入密码" :icon="'ios-lock-outline'" @keyup.enter.native="handleLogin")
@@ -39,32 +39,11 @@ export default {
       },
       loading: false,
       LoginCenterBg
-      // readonly: false
     }
   },
-  // computed: {
-  //   inputType () {
-  //     if (this.inputTypeHandler()) {
-  //       return 'text'
-  //     } else {
-  //       return 'password'
-  //     }
-  //   }
-  // },
   created () { },
   methods: {
     ...mapActions(['login']),
-    // inputTypeHandler: function () {
-    //   if (this.loginForm.password) {
-    //     return false
-    //   } else {
-    //     this.readonly = true
-    //     setTimeout(() => {
-    //       this.readonly = false
-    //     }, 0)
-    //     return true
-    //   }
-    // },
     handleLogin: function () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -109,20 +88,7 @@ export default {
 .login {
   position: relative;
   height: 100%;
-  background: linear-gradient(-45deg, #ee7752, #e45f92, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradientBG 20s ease infinite;
-  @keyframes gradientBG {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
+  overflow: hidden;
 
   .login-form-layout {
     position: absolute;
@@ -176,6 +142,25 @@ export default {
   }
   .hide-input {
     display: none;
+  }
+}
+.login:after {
+  content: "";
+  position: absolute;
+  width: 400%;
+  height: 400%;
+  background: linear-gradient(-45deg, #ee7752, #e45f92, #23a6d5, #23d5ab);
+  animation: gradientBG 15s ease infinite;
+  @keyframes gradientBG {
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-50%, -50%);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
   }
 }
 </style>

@@ -1,18 +1,8 @@
-<template>
-  <div>
-    <Input name="password"
-           :type="inputType"
-           :readonly="readonly"
-           @on-focus="inputTypeHandler"
-           @on-change="inputHandler"
-           clearable
-           :value="password"
-           :placeholder="placeholder">
-    <Icon v-if="icon"
-          :type="icon"
-          slot="prepend"></Icon>
-    </Input>
-  </div>
+<template lang="pug">
+  div
+    input(type='text' style='display:none')
+    Input(name="password" :type="inputType" :readonly="readonly" @on-focus="readonlyHandler" @on-change="inputHandler" clearable :value="password" :placeholder="placeholder" autocomplete='new-password')
+      Icon(v-if="icon" :type="icon" slot="prepend")
 </template>
 
 <script>
@@ -41,34 +31,26 @@ export default {
   data () {
     return {
       inputText: '',
-      readonly: false
-    }
-  },
-  computed: {
-    inputType () {
-      if (this.inputTypeHandler()) {
-        return 'text'
-      } else {
-        return 'password'
-      }
+      readonly: true,
+      inputType: 'text'
     }
   },
   methods: {
     inputHandler: function (e) {
       this.inputText = e.target.value
       this.$emit('input', e.target.value)
-    },
-    inputTypeHandler: function () {
-      if (this.inputText) {
-        return false
-      } else {
-        this.readonly = true
-        let timer = setTimeout(() => {
-          clearTimeout(timer)
-          this.readonly = false
-        }, 0)
-        return true
+      this.inputType = 'password'
+      if (e.target.value === '') {
+        this.inputType = 'text'
+        this.readonlyHandler()
       }
+    },
+    readonlyHandler: function () {
+      this.readonly = true
+      let timer = setTimeout(() => {
+        clearTimeout(timer)
+        this.readonly = false
+      }, 0)
     }
   }
 }
