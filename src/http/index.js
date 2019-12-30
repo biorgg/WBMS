@@ -33,8 +33,15 @@
 import Config from './../config'
 import axios from 'axios'
 import store from './../store/index'
-import {LoadingBar, Notice, Message} from 'iview'
-import { getStore, setStore } from '../util'
+import {
+  LoadingBar,
+  Notice,
+  Message
+} from 'iview'
+import {
+  getStore,
+  setStore
+} from '../util'
 
 let instance = axios.create(Config.httpConfig)
 
@@ -150,21 +157,30 @@ class Http {
     return readToken()
   }
 
-  request ({ url, method, headers, data, timeout = Config.httpConfig.timeout, ...rest }) {
+  request ({
+    url,
+    method,
+    headers,
+    data,
+    timeout = Config.httpConfig.timeout,
+    ...rest
+  }) {
     const self = this
     this.token = this.updateToken()
     // merge headers with customer defined ones
-    headers = Object.assign({}, { Authorization: self.token }, headers)
+    headers = Object.assign({}, {
+      Authorization: self.token
+    }, headers)
     let references
     if (method === 'GET' || method === 'DELETE') {
-      references = { params: data }
+      references = {
+        params: data
+      }
     } else if (method === 'POST' || method === 'PUT') {
-      references = { data }
+      references = {
+        data
+      }
     }
-    // intercept mock request in env which is not 'development'
-    // const { baseURL } = rest
-    // if (!baseURL && /^(\/mock\/)/.test(url) && process.env.NODE_ENV !== 'development') return Promise.resolve({data: null})
-    // adjust the request method, in order to refer data by different ways
     return instance.request({
       method,
       url,

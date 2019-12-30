@@ -2,11 +2,19 @@
 import http from './../http'
 
 // 用户登录
-const login = async ({jobNo = '', pwd = '', timestamp = ''}) => {
+const login = async ({
+  jobNo = '',
+  pwd = '',
+  timestamp = ''
+}) => {
   const res = await http.request({
     url: 'auth/login',
     method: 'POST',
-    data: {jobNo, pwd, timestamp}
+    data: {
+      jobNo,
+      pwd,
+      timestamp
+    }
   })
   return res.data
 }
