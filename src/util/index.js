@@ -19,3 +19,9 @@ export const removeStore = name => {
   if (!name) return
   window.localStorage.removeItem(config.storePrefix + name)
 }
+
+// 生成随机数
+export const randomn = n => {
+  if (n > 21) return null
+  return parseInt((Math.random() + 1) * Math.pow(10, n - 1))
+}
