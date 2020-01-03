@@ -10,7 +10,15 @@
           Input(name="username" type="text" :autofocus="true" clearable v-model="loginForm.username" placeholder="请输入用户名")
             Icon(type="ios-person-outline" slot="prepend")
         FormItem(prop="password")
-          inputPassWord(v-model="loginForm.password" placeholder="请输入密码" :icon="'ios-lock-outline'" @keyup.enter.native="handleLogin")
+          inputPassWord(v-model="loginForm.password" placeholder="请输入密码" :icon="'ios-lock-outline'")
+        FormItem(prop="code")
+          .code
+            Input(class="code-input" name="code" type="text" clearable v-model="loginForm.code"
+              @keyup.enter.native="handleLogin" placeholder="请输入验证码")
+              Icon(type="md-key" color="#888888" slot="prepend")
+            img(class="code-img" :src="codeUrl" @load="loadImg" @click="getNewCode")
+            div(v-if="codeLoading" class="code-img")
+              Spin(style="display:inline-block")
         FormItem(style="margin-bottom: 60px")
           Button(style="width:100%;height:45px;margin-top:15px" type="info" size="large" :loading="loading" @click.native.prevent="handleLogin") 登录
     img(:src="LoginCenterBg" class="login-center-layout")
@@ -20,6 +28,9 @@
 import { mapActions } from 'vuex'
 import LoginCenterBg from '@/assets/images/login_center_bg.png'
 import inputPassWord from '@/components/inputPassWord.vue'
+import { userApi } from './../../api'
+import http from './../../http'
+
 const sha512 = require('js-sha512')
 
 export default {
@@ -31,47 +42,97 @@ export default {
     return {
       loginForm: {
         username: '',
-        password: ''
+        password: '',
+        code: ''
       },
       loginRules: {
         username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-        password: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
+        password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
+        code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
       },
+      codeLoading: true,
+      codeUrl: '',
+      randomStr: '',
       loading: false,
       LoginCenterBg
     }
   },
-  created () { },
+  created () {
+    this.getNewCode()
+  },
   methods: {
     ...mapActions(['login']),
+    loadImg: function () {
+      console.log('图片加载了')
+      this.codeLoading = false
+    },
+    getNewCode: function () {
+      this.randomStr = this.getrandomNum(15)
+      // this.codeUrl = config.httpConfig.baseURL + '/code?randomStr=' + this.randomStr;
+      this.codeUrl = 'http://192.168.1.143:9999/code?randomStr=' + this.randomStr
+    },
     handleLogin: function () {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
-          let timestamp = new Date().getTime()
-          let pwd1 = sha512(`${this.loginForm.password}:yzyx`)
-          let pwd2 = sha512(`${pwd1}${timestamp}`)
-          this.login({
-            jobNo: this.loginForm.username,
-            pwd: pwd2,
-            timestamp: timestamp
-          }).then(res => {
-            this.loading = false
-            this.$Message.success({
-              content: '登录成功,欢迎回来!',
-              duration: 1,
-              onClose: () => {
-                this.$router.push({
-                  name: 'home_index'
-                })
-              }
-            })
-          }).catch(err => {
-            this.$Message.error({
-              content: err.message
-            })
-            this.loading = false
+          let par = `?username=${this.loginForm.username}&password=${this.loginForm.password}&randomStr=${this.randomStr}&code=${this.loginForm.code}&grant_type=password&scope=server`
+
+          http.request({
+            url: `/auth/oauth/token${par}`,
+            method: 'POST',
+            data: {
+              username: this.loginForm.username,
+              password: this.loginForm.password,
+              randomStr: this.randomStr,
+              code: this.loginForm.code,
+              grant_type: 'password',
+              scope: 'server'
+            },
+            headers: {
+              'Authorization': 'Basic dWNuOnVjbg==', 'TENANT-ID': '1'
+            }
+          }).then(function (res) {
+            console.log(res)
+          }).catch(function (e) {
+            console.log('阿偶')
           })
+
+          // this.api.post(`/auth/oauth/token`, {
+          //   username: this.loginForm.username,
+          //   password: this.loginForm.password,
+          //   randomStr: this.randomStr,
+          //   code: this.loginForm.code,
+          //   grant_type: 'password',
+          //   scope: 'server'
+          // }, { headers: { 'Authorization': 'Basic dWNuOnVjbg==', 'TENANT-ID': '1' } }).then(function (res) {
+          //   console.log(res)
+          // }).catch(function (e) {
+          //   console.log('阿偶')
+          // })
+          // this.loading = true
+          // let timestamp = new Date().getTime()
+          // let pwd1 = sha512(`${this.loginForm.password}:yzyx`)
+          // let pwd2 = sha512(`${pwd1}${timestamp}`)
+          // this.login({
+          //   jobNo: this.loginForm.username,
+          //   pwd: pwd2,
+          //   timestamp: timestamp
+          // }).then(res => {
+          //   this.loading = false
+          //   this.$Message.success({
+          //     content: '登录成功,欢迎回来!',
+          //     duration: 1,
+          //     onClose: () => {
+          //       this.$router.push({
+          //         name: 'home_index'
+          //       })
+          //     }
+          //   })
+          // }).catch(err => {
+          //   this.$Message.error({
+          //     content: err.message
+          //   })
+          //   this.loading = false
+          // })
         } else {
           this.$Message.error('请填写完整信息')
         }
@@ -87,7 +148,7 @@ export default {
 }
 .login {
   position: relative;
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
 
   .login-form-layout {
@@ -125,6 +186,21 @@ export default {
     /deep/ .ivu-input {
       height: 40px;
       line-height: 40px;
+    }
+
+    .code {
+      display: flex;
+      justify-content: space-between;
+      .code-input {
+        width: 55%;
+      }
+      .code-img {
+        display: block;
+        width: 40%;
+        height: 38px;
+        text-align: center;
+        line-height: 38px;
+      }
     }
   }
 

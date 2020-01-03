@@ -9,11 +9,25 @@ import iView from 'iview'
 Vue.config.productionTip = false
 Vue.use(iView)
 
+const mixins = {
+  methods: {
+    // 生成随机数
+    getrandomNum (n) {
+      if (n > 21) return null
+      return parseInt((Math.random() + 1) * Math.pow(10, n - 1))
+    }
+  }
+}
+
+Vue.mixin(mixins)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+    App
+  },
   store,
   template: '<App/>'
 })

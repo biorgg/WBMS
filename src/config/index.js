@@ -10,7 +10,8 @@ const output = isDev ? {
   // 存储axios中的一些变量
   httpConfig: {
     // baseURL: 'https://gw.chinayzyx.com',
-    baseURL: 'https://www.fastmock.site/mock/df8e393096fdca27a047454ae45ecc01/wbmsmock',
+    // baseURL: 'https://www.fastmock.site/mock/df8e393096fdca27a047454ae45ecc01/wbmsmock',
+    baseURL: '/api',
     timeout: 10000
   }
 } : {}
