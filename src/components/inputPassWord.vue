@@ -11,7 +11,7 @@ export default {
   model: [
     {
       prop: 'password',
-      event: 'input'
+      event: 'change'
     }
   ],
   props: {

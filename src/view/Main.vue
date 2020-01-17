@@ -160,6 +160,9 @@ export default {
     left: 0;
     z-index: 21;
     transition: width 0.3s;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   .single-page-con {
     position: absolute;
